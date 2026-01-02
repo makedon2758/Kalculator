@@ -1,0 +1,67 @@
+END USER LICENSE AGREEMENT (EULA)
+
+© 2025 Serhii Kovalchuk. All rights reserved.
+Software: “Kalkulator Cięcia” (the “Software”).
+By installing, copying, or using the Software you acknowledge that you have read and agree to this Agreement.
+
+1. License Grant
+
+1.1. The rights holder (“Rights Holder”) grants you a non-exclusive, non-transferable license to use the Software by one natural person or one organization on the number of devices stated in your license (by default — one device).
+1.2. A trial version is provided for a limited period and may include feature limitations. After the trial ends, use of the Software is prohibited unless a valid license is obtained.
+1.3. No ownership rights in the Software are transferred to you.
+
+2. Restrictions
+
+Without the Rights Holder’s prior written consent, you may not:
+
+distribute, publish, sell, rent, lease, sublicense, or otherwise make the Software or license keys available to any third party;
+
+share a license key with others or use it on more devices than permitted;
+
+bypass, remove, disable, or modify any protection or license-verification mechanisms;
+
+modify, decompile, disassemble, or reverse engineer the Software (except to the extent such activity is expressly permitted by applicable law);
+
+remove or alter copyright, trademark, or other proprietary notices;
+
+offer the Software to third parties as a hosted service (SaaS).
+
+3. Technical Protection and Validation
+
+3.1. To activate and periodically validate a license, the Software may connect to a licensing server and transmit minimal technical data: license key, hardware identifier (HWID), computer/user name, IP address, Software version, and timestamps.
+3.2. This data is used solely for license verification and anti-abuse and is not shared with third parties unless required by law.
+3.3. In case of a violation (exceeding device seats, a ban by key/HWID/organization, trial expiration, etc.), the Rights Holder may remotely restrict the Software from running.
+
+4. Updates
+
+4.1. The Software may check for updates and install them automatically or on request; certain updates may be mandatory.
+4.2. Updates may change or remove functionality. Installing updates does not create any additional warranty.
+
+5. Calculations and Disclaimer of Liability
+
+5.1. The Software is intended for auxiliary calculations only and does not constitute professional advice. Results depend on input data, assumptions, and rounding rules and are provided “as is.”
+5.2. You are solely responsible for verifying the correctness and suitability of results for your purposes before using them in production, commercial, or other decisions.
+5.3. To the maximum extent permitted by law, the Rights Holder shall not be liable for any damages (including lost profits, data loss, downtime, or indirect/incidental/consequential damages) arising out of the use of or inability to use the Software.
+5.4. The Rights Holder’s total aggregate liability under any claim is limited to the amount actually paid by you for the license; for trial/free versions it is zero.
+
+6. Third-Party Components
+
+The Software may include third-party libraries distributed under their own open-source licenses. Their texts are provided in THIRD-PARTY-NOTICES.txt.
+
+7. Privacy
+
+Technical data is processed only as necessary for activation, validation, and improving operation of the Software, in accordance with applicable law. By using the Software, you consent to such processing.
+
+8. Term and Termination
+
+This Agreement terminates automatically if you breach its terms. You must cease use and delete all copies of the Software. Provisions on limitation of liability and protection of rights survive termination.
+
+9. Governing Law and Dispute Resolution
+
+This Agreement is governed by the laws of the jurisdiction where the Rights Holder is domiciled, unless mandatory rules of your law provide otherwise. Disputes shall be resolved by the competent courts of that jurisdiction.
+
+10. Miscellaneous
+
+If any provision is held invalid, the remaining provisions remain in full force. Failure to enforce any right shall not constitute a waiver.
+
+By using the Software, you confirm your acceptance of this EULA.

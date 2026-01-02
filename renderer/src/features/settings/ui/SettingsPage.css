@@ -1,0 +1,52 @@
+.settingsTitle {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.settingsCard {
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  border-radius: 14px;
+  padding: 14px;
+  max-width: 720px;
+}
+
+.settingsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.settingsRow:last-child {
+  border-bottom: none;
+}
+
+.settingsLabel {
+  opacity: .85;
+}
+
+.settingsValue {
+  opacity: .95;
+  font-weight: 600;
+}
+
+.settingsBtn {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(204,255,0,.35);
+  background: rgba(204,255,0,.10);
+  color: #e5e7eb;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.settingsHint {
+  margin-top: 10px;
+  opacity: .75;
+  font-size: 12px;
+  max-width: 720px;
+}

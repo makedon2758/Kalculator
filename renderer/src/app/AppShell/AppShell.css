@@ -1,0 +1,67 @@
+.app {
+  height: 100%;
+  display: flex;
+  background: #0b0c15;
+  color: #e5e7eb;
+}
+
+.sidebar {
+  width: 280px;
+  min-width: 260px;
+  border-right: 1px solid rgba(255,255,255,.08);
+  background: #0f1220;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  padding: 16px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.brandTitle {
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+.brandMeta {
+  margin-top: 6px;
+  font-size: 12px;
+  color: rgba(229,231,235,.7);
+}
+
+.nav {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.navBtn {
+  text-align: left;
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.03);
+  color: inherit;
+  cursor: pointer;
+}
+
+.navBtn.isActive {
+  border-color: rgba(204,255,0,.35);
+  box-shadow: 0 0 0 2px rgba(204,255,0,.08) inset;
+}
+
+.main {
+  flex: 1;
+  padding: 18px 22px;
+}
+
+
+.main {
+  flex: 1;
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}

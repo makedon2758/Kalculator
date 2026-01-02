@@ -1,0 +1,7 @@
+THIRD-PARTY NOTICES
+
+Electron — MIT License — https://github.com/electron/electron
+SheetJS (xlsx / xlsx-js-style) — Apache-2.0 / MIT — соответствующие репозитории
+Tailwind CSS — MIT License — https://github.com/tailwindlabs/tailwindcss
+...
+Copyright notices are retained as required by their licenses.
