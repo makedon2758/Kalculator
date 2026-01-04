@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./app.css";
-import { TABS, type TabKey } from "./tabs";
+import { type TabKey } from "./tabs";
 import { AppShell } from "./AppShell/AppShell";
 import { useReleaseNotes } from "../features/release-notes/model/useReleaseNotes";
 import { ReleaseNotesModal } from "../features/release-notes/ui/ReleaseNotesModal";
@@ -11,8 +11,7 @@ export default function App() {
   const [tab, setTab] = useState<TabKey>("kalkulator");
 
   const [rn, closeRn, openRn] = useReleaseNotes();
-  const currentLabel = TABS.find((x) => x.key === tab)?.label ?? "";
-
+  
   return (
     <>
       <ReleaseNotesModal
