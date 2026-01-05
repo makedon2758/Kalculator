@@ -7,15 +7,14 @@
     "dev:renderer": "npm --prefix renderer run dev",
     "dev:electron": "wait-on tcp:5173 && cross-env VITE_DEV_SERVER_URL=http://localhost:5173 electron .",
     "dev": "concurrently -k -n RENDERER,ELECTRON \"npm run dev:renderer\" \"npm run dev:electron\"",
-
     "build:renderer": "npm --prefix renderer run build",
     "build": "npm run build:renderer"
   },
   "devDependencies": {
-    "concurrently": "^9.0.0",
+    "concurrently": "^9.2.1",
     "cross-env": "^7.0.3",
     "electron": "^39.2.7",
-    "wait-on": "^8.0.0"
+    "wait-on": "^8.0.5"
   },
   "build": {
     "nsis": {
@@ -23,7 +22,10 @@
       "include": "build/installer.nsh"
     },
     "extraResources": [
-      { "from": "build/THIRD-PARTY-NOTICES.txt", "to": "THIRD-PARTY-NOTICES.txt" }
+      {
+        "from": "build/THIRD-PARTY-NOTICES.txt",
+        "to": "THIRD-PARTY-NOTICES.txt"
+      }
     ]
   }
 }

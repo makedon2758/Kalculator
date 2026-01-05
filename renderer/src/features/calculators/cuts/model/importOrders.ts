@@ -1,4 +1,6 @@
 import { ensureXlsx } from "@/shared/legacy/xlsx/ensureXlsx";
+import type { GridView } from "../core/gridTypes";
+
 
 type Grid = { headers: string[]; rows: Record<string, any>[]; meta?: any };
 export type OrderRow = { L: number; B: number; count: number };
@@ -263,3 +265,46 @@ export async function importFileToOrders(file: File): Promise<{ orders: OrderRow
 
   return { orders, meta: stripped.meta || {} };
 }
+
+function gridToGridView(headers: string[], rows: Record<string, any>[]): GridView {
+  const columns = headers.map((title, i) => ({
+    key: `c${i}`,
+    title: String(title ?? "").trim() || `col${i + 1}`,
+  }));
+
+  const outRows = rows.map((r) => {
+    const obj: Record<string, unknown> = {};
+    headers.forEach((h, i) => {
+      obj[`c${i}`] = r?.[h] ?? "";
+    });
+    return obj;
+  });
+
+  return { columns, rows: outRows };
+}
+
+export async function importFileToGridView(file: File): Promise<{ gridView: GridView; meta: any }> {
+  const name = (file.name || "").toLowerCase();
+
+  let grid: Grid;
+
+  if (name.endsWith(".csv") || name.endsWith(".txt")) {
+    const text = await file.text();
+    grid = fromAOA(parseCSV(text));
+  } else if (name.endsWith(".xlsx") || name.endsWith(".xls")) {
+    const XLSX = await ensureXlsx();
+    const data = await file.arrayBuffer();
+    const wb = XLSX.read(data, { type: "array" });
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, defval: "" });
+    grid = fromAOA(aoa);
+  } else {
+    throw new Error("Nieobsługiwany format pliku");
+  }
+
+  const stripped = stripStopnieRowsFromGrid(grid);
+  const gridView = gridToGridView(stripped.headers, stripped.rows);
+
+  return { gridView, meta: stripped.meta || {} };
+}
+

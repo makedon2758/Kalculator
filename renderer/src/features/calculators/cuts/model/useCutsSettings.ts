@@ -1,114 +1,64 @@
-import { useMemo } from "react";
-import { useLsState } from "@/shared/settings/useLsState";
-
-type AntiUi = {
-  enabled: boolean;
-  minL: string;     // anti-minL
-  limitB: string;   // anti-limitB
-  maxK: string;     // anti-maxK
-  lastB: string;    // anti-lastB
-};
+import { useLsBool01 } from "@/shared/settings/useLsBool01";
+import { useLsNumber } from "@/shared/settings/useLsNumber";
 
 const LS = {
-  sheetWidth: "settings_sheetWidth",
-  toleranceL: "settings_toleranceL",
-  minLeftover: "settings_minLeftover",
-  tailWantedB: "settings_tailWantedB",
-  allowFallback: "settings_allowFallback",
+  w: "settings_sheetWidth",
+  tol: "settings_tolL",
+  min: "settings_minLeftover",
+  og: "settings_wantedScrapB",
+  fb: "settings_fallback",
 
-  antiEnabled: "settings_antiEnabled",
+  antiOn: "settings_antiEnabled", // новый ключ (безопасно)
   antiMinL: "settings_antiMinL",
-  antiLimitB: "settings_antiLimitB",
+  antiLimB: "settings_antiLimitB",
   antiMaxK: "settings_antiMaxK",
   antiLastB: "settings_antiLastB",
-} as const;
-
-function toNum(s: string, fallback: number) {
-  const n = Number(String(s ?? "").trim());
-  return Number.isFinite(n) ? n : fallback;
-}
-
-function toNumOrNull(s: string) {
-  const t = String(s ?? "").trim();
-  if (!t) return null;
-  const n = Number(t);
-  return Number.isFinite(n) ? n : null;
-}
+};
 
 export function useCutsSettings() {
-  // значения как строки — чтобы 1:1 повторить legacy (пусто / нечисло)
-  const [sheetWidthStr, setSheetWidthStr] = useLsState<string>(LS.sheetWidth, "1000");
-  const [toleranceLStr, setToleranceLStr] = useLsState<string>(LS.toleranceL, "2");
-  const [minLeftoverStr, setMinLeftoverStr] = useLsState<string>(LS.minLeftover, "60");
-  const [tailWantedBStr, setTailWantedBStr] = useLsState<string>(LS.tailWantedB, "50");
+  const [sheetWidth, setSheetWidth] = useLsNumber(LS.w, 1000);
+  const [toleranceL, setToleranceL] = useLsNumber(LS.tol, 2);
+  const [minLeftover, setMinLeftover] = useLsNumber(LS.min, 40);
+  const [tailWantedB, setTailWantedB] = useLsNumber(LS.og, 50);
+  const [allowFallback, setAllowFallback] = useLsBool01(LS.fb, false);
 
-  const [allowFallback, setAllowFallback] = useLsState<boolean>(LS.allowFallback, false);
+  const [antiEnabled, setAntiEnabled] = useLsBool01(LS.antiOn, false);
+  const [antiMinL, setAntiMinL] = useLsNumber(LS.antiMinL, 0);
+  const [antiLimB, setAntiLimB] = useLsNumber(LS.antiLimB, 0);
+  const [antiMaxK, setAntiMaxK] = useLsNumber(LS.antiMaxK, 0);
+  const [antiLastB, setAntiLastB] = useLsNumber(LS.antiLastB, 0);
 
-  const [antiEnabled, setAntiEnabled] = useLsState<boolean>(LS.antiEnabled, false);
-  const [antiMinL, setAntiMinL] = useLsState<string>(LS.antiMinL, "");
-  const [antiLimitB, setAntiLimitB] = useLsState<string>(LS.antiLimitB, "");
-  const [antiMaxK, setAntiMaxK] = useLsState<string>(LS.antiMaxK, "");
-  const [antiLastB, setAntiLastB] = useLsState<string>(LS.antiLastB, "");
+  const anti: any = { enabled: antiEnabled };
+  if (antiEnabled) {
+    if (antiMinL > 0) anti.minLNoCut = antiMinL;
+    if (antiLimB > 0) anti.limitMergeB = antiLimB;
+    if (antiMaxK > 0) anti.maxMergeK = antiMaxK;
+    if (antiLastB > 0) anti.lastNoCutB = antiLastB;
+  }
 
-  const parsed = useMemo(() => {
-    const sheetWidth = toNum(sheetWidthStr, 1000);
-    const toleranceL = toNum(toleranceLStr, 2);
-    const minLeftover = toNum(minLeftoverStr, 60);
-    const tailWantedB = toNum(tailWantedBStr, 50);
-
-    const anti: any = { enabled: antiEnabled };
-    if (antiEnabled) {
-      const vMinL = toNumOrNull(antiMinL);
-      const vLimitB = toNumOrNull(antiLimitB);
-      const vMaxK = toNumOrNull(antiMaxK);
-      const vLastB = toNumOrNull(antiLastB);
-
-      if (vMinL && vMinL > 0) anti.minLNoCut = vMinL;
-      if (vLimitB && vLimitB > 0) anti.limitMergeB = vLimitB;
-
-      // ВАЖНО: пусто => null, но legacy трактовал “пусто/0” как блок при B>limit.
-      // calc.js сам решает (getMaxForeign), поэтому передаём как есть (0 тоже валиден).
-      if (vMaxK !== null) anti.maxMergeK = vMaxK;
-
-      if (vLastB && vLastB > 0) anti.lastNoCutB = vLastB;
-    }
-
-    return {
-      sheetWidth,
-      toleranceL,
-      minLeftover,
-      tailWantedB,
-      allowFallback,
-      anti,
-    };
-  }, [
-    sheetWidthStr,
-    toleranceLStr,
-    minLeftoverStr,
-    tailWantedBStr,
+  const calcOptions = {
+    sheetWidth,
+    toleranceL,
     allowFallback,
-    antiEnabled,
-    antiMinL,
-    antiLimitB,
-    antiMaxK,
-    antiLastB,
-  ]);
+    minLeftover,
+    tailWantedB,
+    orderByRemainder: false as const, // 1:1 (пока фиксируем)
+    anti,
+  };
 
   return {
-    // UI (строки/булевы, чтобы не терять “пусто”)
-    sheetWidthStr, setSheetWidthStr,
-    toleranceLStr, setToleranceLStr,
-    minLeftoverStr, setMinLeftoverStr,
-    tailWantedBStr, setTailWantedBStr,
+    sheetWidth, setSheetWidth,
+    toleranceL, setToleranceL,
+    minLeftover, setMinLeftover,
+    tailWantedB, setTailWantedB,
     allowFallback, setAllowFallback,
 
     antiEnabled, setAntiEnabled,
     antiMinL, setAntiMinL,
-    antiLimitB, setAntiLimitB,
+    antiLimB, setAntiLimB,
     antiMaxK, setAntiMaxK,
     antiLastB, setAntiLastB,
 
-    // parsed options (для calculateCuts 1:1)
-    parsed,
+    calcOptions,
   };
 }

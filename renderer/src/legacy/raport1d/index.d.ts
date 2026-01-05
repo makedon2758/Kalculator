@@ -8,10 +8,19 @@ declare module "@/legacy/raport1d/export" {
     opts?: any
   ): { plan: any[][]; leftovers: any[][] };
 
+  // Optional legacy exporter used by the "Maty" calculator.
+  // (Not wired in UI yet, but we keep typings for future reuse.)
+  export function exportMatyXLSX(
+    mats: any[],
+    cfg?: any,
+    srcInfo?: string
+  ): Promise<void>;
+
   export function exportReport(
     fmt: string,
     plan: any[][],
-    leftovers: any[][]
+    leftovers: any[][],
+    fileName?: string
   ): Promise<void>;
 }
 
